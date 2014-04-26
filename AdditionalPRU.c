@@ -70,7 +70,6 @@ void PRU1toPRU0InterruptTx()
 	__R31 |= 34;
 }
 
-// Test all RX
 int PRU0toPRU1InterruptRx()
 {
 	if ((__R31 |= 32) == 1)
