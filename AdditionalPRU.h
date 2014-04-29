@@ -29,7 +29,6 @@
 #define FALLING 2
 #define RISING 3
 
-// A lot to do
 void ddrWrite(int address, int value);
 int ddrRead(int address);
 
