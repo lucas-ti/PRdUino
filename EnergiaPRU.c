@@ -5,21 +5,12 @@ volatile register unsigned int __R31;
 
 void preciseDelay1Us()
 {
-	// Between 85 and 90
 	asm (" LDI r0, 92");
 	asm ("DELAY:");
 	asm (" SUB r0, r0, 1");
 	asm (" QBNE DELAY, r0, 0");
 }
 
-// Delay for -o0 optimization
-/*void delay1Us()
-{
-	volatile unsigned long i;
-	for(i = 0; i < 13; i++);
-}*/
-
-// Delay for -o3 optimization
 void delay1Us()
 {
 	volatile unsigned long i;
@@ -43,10 +34,8 @@ void delay(unsigned long ms)
 	return;
 }
 
-// Works best with -o0 optimization; if -o3 it gets off
 void delayMicroseconds(unsigned long us)
 {
-	// Works for values > 5 and starts getting off in the 100's
 	volatile unsigned long i;
 	for(i = 0; i < us; i++)
 	{
@@ -94,50 +83,6 @@ int digitalRead(uint8_t pin)
 long map(long x, long in_min, long in_max, long out_min, long out_max)
 {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-// Still needs cleaning up--somehow incorporate timers
-void analogWrite(uint8_t pin, uint8_t val)
-{
-	int firstDelay = val*2083/255; // Normalizing it to the appropriate frequency
-	int secondDelay = 2083 - firstDelay;
-	digitalWrite(pin, HIGH);
-	delay(firstDelay);
-	digitalWrite(pin, LOW);
-	delay(secondDelay);
-
-}
-
-void tone(uint8_t pin, uint8_t frequency)
-{
-	// Multiplying freq by 1e6 to get it to a microsecond delay
-	// Dividing by 2*200M to get the delay for each 1/2 freq
-	int delayFrequency = 1000000*frequency/400000000;
-	if ( delayFrequency > 10000)	
-	{
-		digitalWrite(pin, HIGH);
-		delay(delayFrequency/1000);
-		digitalWrite(pin, LOW);
-		delay(delayFrequency/1000);
-	}
-	else
-	{
-		digitalWrite(pin, HIGH);
-		delayMicroseconds(delayFrequency);
-		digitalWrite(pin, LOW);
-		delayMicroseconds(delayFrequency);
-	}
-}
-
-/*void tone(uint8_t pin, uint8_t frequency, uint8_t duration)
-{
-
-}*/
-
-void noTone(uint8_t pin)
-{
-	digitalWrite(pin, LOW);
-
 }
 
 void init()
