@@ -5,7 +5,11 @@ Pypruss python bindings for the PRU. (Instructions for installation can be found
 
 Instructions for compiling:
 
-After creating your .ino file, copy it into the Energia directory. Make the compile script executable by executing the following command.
+After creating your .ino file, copy it into the Energia directory. (Note: the Energia file must be in the PRdUino directory.) The examples can be copied to the PRdUino directory by running the command from the example folder.
+
+cp [example] ..
+
+Make the compile script executable by executing the following command.
 
 chmod +x compile.sh
 
