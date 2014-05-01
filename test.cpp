@@ -18,6 +18,7 @@ int main()
 	string variableValues = "";
 	int lineTracker = 0;
 	int equalsLocation;
+	int setupCheck;
 	int variableLocation;
 
 	ifstream firstFile;
@@ -63,6 +64,7 @@ int main()
   	{
     		while ( getline (secondFile,line) )
     		{
+			setupCheck = line.find("void setup()");
 			// Checks to see if the line contains a variable type
 			if (typeCheck(line))
 			{
@@ -82,7 +84,7 @@ int main()
 					newFile << line << '\n';	
 			}
 			// Breaks if it reaches void setup()
-			else if (line == "void setup()")
+			else if (setupCheck != std::string::npos)
 				break;
       			else
 				newFile << line << '\n';
